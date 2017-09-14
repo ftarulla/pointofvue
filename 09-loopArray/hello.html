@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Hello Bootstrap</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="hello.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../bootstrap.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Let's hear some stories!!</h1>
+      <div>
+        <ul class="list-group">
+          <li v-for="story in stories" class="list-group-item">
+            Once upon a time ... <i>{{ story }}</i>
+          </li>
+        </ul>
+      </div>
+
+      <pre>{{ $data | json }}</pre>
+    </div>
+  </body>
+
+  <script src="../vue.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script> -->
+  <script>
+    new Vue({
+      el: '.container',
+      data: {
+        stories: [
+          "I started learning Vue today!",
+          "Yesterday was raining!",
+          "Someone ate my chocolate ..."
+        ]
+      }
+    });
+    // In the above example we target the element with class of .container . Be careful when
+    // you are targeting an element by class, when the class is present more than 1 time, Vue.js
+    // will mount on the first element only.
+    // Using el: you can target any DOM element on the! Try targeting the body of your HTML
+    // and see how that works!
+  </script>
+</html>
