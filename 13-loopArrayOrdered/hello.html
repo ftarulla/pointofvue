@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <title>Hello Bootstrap</title>
+
+    <link rel="stylesheet" type="text/css" href="hello.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../bootstrap.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Let's hear some stories!!</h1>
+      <div>
+        <div class="form-group">
+          <label for="query">
+            What are you looking for?
+          </label>
+          <input v-model="query" class="form-control">
+        </div>
+        <h3>Search results: </h3>
+
+        <div v-if="resultStories.length == 0">
+          Sorry! We didn't find anything that match your query :(
+        </div>
+        <ul class="list-group">
+          <li v-for="story in sortedResultStories" class="list-group-item">
+            <i>{{ story.plot }}</i>
+            <div>Author: {{ story.writer }}</div>
+            <div>Votes: {{story.upvotes}} </div>
+          </li>
+        </ul>
+
+        <button id="btnSorting" type="button" class="btn btn-primary" @click="invertSort()">
+          {{ orderMaxVotesUp ? 'lo más votados abajo' : 'lo más votados arriba' }}
+        </button>
+
+      </div>
+
+      <pre>{{ $data | json }}</pre>
+    </div>
+  </body>
+
+  <script src="../vue.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script> -->
+  <script>
+    new Vue({
+      el: '.container',
+      data: {
+        query: '',
+        orderMaxVotesUp: true,
+        stories: [ {
+          plot: "I started the joke!",
+          writer: "Alex",
+          upvotes: 27
+        },{
+          plot: "about nothing and everything all at once.",
+          writer: "Alex",
+          upvotes: 100
+        },{
+          plot: "I started learning Vue today!",
+          writer: "Alex",
+          upvotes: 2
+        }, {
+          plot: "Yesterday was raining!",
+          writer: "John",
+          upvotes: 1
+        }, {
+          plot: "Someone ate my chocolate ...",
+          writer: "Ringo",
+          upvotes: 42
+        }, {
+          plot: "In an octopus's garden ...",
+          writer: "Ringo",
+          upvotes: 10
+        } ]
+      },
+      computed: {
+        resultStories: function() {
+          return this.stories.filter(story => story.plot.indexOf(this.query) >= 0 || story.writer.indexOf(this.query) >= 0);
+        },
+        sortedStoriesByVotes: function() {
+          return this.stories.sort((s1, s2) => s1.upvotes > s2.upvotes);
+        },
+        sortedResultStories: function() {
+          return this.stories
+                    .filter(story => story.plot.indexOf(this.query) >= 0 || story.writer.indexOf(this.query) >= 0)
+                    .sort((s1, s2) => this.orderMaxVotesUp ? s1.upvotes < s2.upvotes : s1.upvotes >= s2.upvotes);
+        }
+      },
+      methods: {
+        invertSort: function() {
+          this.orderMaxVotesUp = !this.orderMaxVotesUp;
+        }
+      }
+    });
+    // In the above example we target the element with class of .container . Be careful when
+    // you are targeting an element by class, when the class is present more than 1 time, Vue.js
+    // will mount on the first element only.
+    // Using el: you can target any DOM element on the! Try targeting the body of your HTML
+    // and see how that works!
+  </script>
+</html>

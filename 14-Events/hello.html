@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <title>Hello Events</title>
+
+    <link rel="stylesheet" type="text/css" href="hello.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../bootstrap.min.css" />
+  </head>
+  <body>
+
+<!-- Example 01 -->
+    <div id="example01" class="container">
+      <h2>Example 01</h2>
+      <button v-on:click="counter1 += 1" type="button" class="btn btn-primary">
+        Add 1
+      </button>
+      <p> The button has been clicked {{ counter1 }} times.</p>
+
+      <button @click="counter2 += 1" type="button" class="btn btn-primary">
+        Add 1
+      </button>
+      <p> And this other button has been clicked {{ counter2 }} times.</p>
+    </div>
+
+<!-- Example 02 -->
+    <div id="example02" class="container">
+      <h2>Example 02</h2>
+      <button v-on:click="greet" type="button" class="btn btn-primary">Greet</button>
+    </div>
+
+<!-- Example 03 -->
+    <div id="example03" class="container">
+      <h2>Example 03</h2>
+      <button v-on:click="sayHelloTo('ble', $event)" type="button" class="btn btn-primary">sayHelloTo</button>
+    </div>
+
+
+  </body>
+
+  <script src="../vue.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script> -->
+  <script>
+
+
+// Example 01
+    var example1 = new Vue({
+      el: '#example01',
+      data: {
+        counter1: 0,
+        counter2: 0
+      }
+    });
+
+// Example 02
+    var example2 = new Vue({
+      el: '#example02',
+      data: {
+        name: 'Vue.js'
+      },
+      methods: {
+        greet: function(event) {
+          if(event) {
+            console.log(event);
+          }
+        }
+      }
+    });
+    console.log(example2);
+    example2.greet({name: "dummy event"});
+
+// Example 03
+    var example3 = new Vue({
+      el: '#example03',
+      methods: {
+        sayHelloTo: function(name, event) {
+          console.log("Hi %s", name);
+
+          console.log(event);
+        }
+      }
+    });
+  </script>
+</html>

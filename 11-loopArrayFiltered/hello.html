@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title>Hello Bootstrap</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="hello.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../bootstrap.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Let's hear some stories!!</h1>
+      <div>
+        <h3>Alex's stories</h3>
+        <ul class="list-group">
+          <!-- <li v-for="story in stories | filterBy 'Alex' in 'writer'" class="list-group-item"> -->
+            <!-- https://vuejs.org/v2/guide/migration.html#Replacing-the-filterBy-Filter -->
+          <li v-for="story in RingoStories" class="list-group-item">
+            {{ix}}. Once upon a time ... <i>{{ story.plot }}</i>
+            <div>Author: {{ story.writer }}</div>
+          </li>
+        </ul>
+
+      </div>
+
+      <pre>{{ $data | json }}</pre>
+    </div>
+  </body>
+
+  <script src="../vue.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script> -->
+  <script>
+    new Vue({
+      el: '.container',
+      data: {
+        stories: [ {
+          plot: "I started learning Vue today!",
+          writer: "Alex"
+        }, {
+          plot: "Yesterday was raining!",
+          writer: "John"
+        }, {
+          plot: "Someone ate my chocolate ...",
+          writer: "Ringo"
+        }, {
+          plot: "In an octopus's garden ...",
+          writer: "Ringo"
+        } ]
+      },
+      computed: {
+        RingoStories: function(name) {
+          return this.stories.filter(story => story.writer == "Ringo")
+        }
+      }
+    });
+    // In the above example we target the element with class of .container . Be careful when
+    // you are targeting an element by class, when the class is present more than 1 time, Vue.js
+    // will mount on the first element only.
+    // Using el: you can target any DOM element on the! Try targeting the body of your HTML
+    // and see how that works!
+  </script>
+</html>

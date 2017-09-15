@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Hello Bootstrap</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="hello.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../bootstrap.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Let's hear some stories!!</h1>
+      <div>
+        <div class="form-group">
+          <label for="query">
+            What are you looking for?
+          </label>
+          <input v-model="query" class="form-control">
+        </div>
+        <h3>Search results: </h3>
+        <div v-if="resultStories.length == 0">
+          Sorry! We didn't find anything that match your query :(
+        </div>
+        <ul class="list-group">
+          <li v-for="story in resultStories" class="list-group-item">
+            <i>{{ story.plot }}</i>
+            <div>Author: {{ story.writer }}</div>
+          </li>
+        </ul>
+
+      </div>
+
+      <pre>{{ $data | json }}</pre>
+    </div>
+  </body>
+
+  <script src="../vue.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script> -->
+  <script>
+    new Vue({
+      el: '.container',
+      data: {
+        query: '',
+        stories: [ {
+          plot: "I started learning Vue today!",
+          writer: "Alex"
+        }, {
+          plot: "Yesterday was raining!",
+          writer: "John"
+        }, {
+          plot: "Someone ate my chocolate ...",
+          writer: "Ringo"
+        }, {
+          plot: "In an octopus's garden ...",
+          writer: "Ringo"
+        } ]
+      },
+      computed: {
+        resultStories: function() {
+          return this.stories.filter(story => story.plot.indexOf(this.query) >= 0 || story.writer.indexOf(this.query) >= 0);
+        }
+      }
+    });
+    // In the above example we target the element with class of .container . Be careful when
+    // you are targeting an element by class, when the class is present more than 1 time, Vue.js
+    // will mount on the first element only.
+    // Using el: you can target any DOM element on the! Try targeting the body of your HTML
+    // and see how that works!
+  </script>
+</html>
